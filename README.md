@@ -4,7 +4,7 @@ The Bike Collision Dashboard is a Shiny web application designed to visualize an
 
 In the "Home" tab, users can select a specific borough and severity to view corresponding collision statistics. It provides a set of value boxes for quick summary insights and interactive plots (a bar chart and a heat map) that dynamically update based on user input.
 
-The Data tab offers a table view of the dataset for detailed exploration.
+The "Data" tab offers a table view of the dataset for detailed exploration.
 
 ### Contributing
 
