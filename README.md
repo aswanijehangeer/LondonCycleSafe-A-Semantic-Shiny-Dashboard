@@ -6,6 +6,11 @@ The shiny semantic dashboard is built using R Shiny, semantic.dashboard, echarts
 
 ### [Checkout live dashboard](https://aswanijahangeer.shinyapps.io/bicycle-collisions-in-london/)
 
+### Resource
+
+- [Bike Collisions in London (2005 - 2019)](https://bikedata.cyclestreets.net/collisions/#9.44/51.4814/0.0567)
+- [Data Source: CycleStreets](https://data.world/makeovermonday/2021w31)
+
 ### Contributing
 
 Contributions to enhance the dashboard or improve its functionalities and your feedback is highly appreciated as I continue to learn and improve my RShiny skills.
