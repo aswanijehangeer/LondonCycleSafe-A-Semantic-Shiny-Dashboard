@@ -1,8 +1,11 @@
-# Define UI for dashboard
+# Sourcing global.R file ----
+source("global.R")
+
+# Define UI for dashboard ----
 ui <- dashboardPage(
   dashboardHeader(title =  tags$b("Bike Collision in London [2005 - 2019]"),
                   titleWidth = "wide",
-                  color = "teal",
+                  color = "grey",
                   inverted = TRUE),
   dashboardSidebar(size = "wide",
                    sidebarMenu(
@@ -11,40 +14,42 @@ ui <- dashboardPage(
                      )
                    ),
   dashboardBody(
-    # Tab: Home
+    # Tab: Home ----
     tabItem(
       tabName = "home",
-     # Input Box
+     # Input Box ----
       box( 
         title = "Inputs", title_side = "top left", width = 16,
         splitLayout(cellWidths = c("50%", "50%"),
-                    selectInput("borough", "Borough", c("All", unique(collision_data$Borough))),
-                    selectInput("severity", "Severity", c("All", unique(collision_data$Severity))))
-        
-
-      ),
-     # Value Boxes
-      valueBox("Total", 500, width = 4, size = "large"),
-      valueBox("Slight", 300, width = 4, size = "large"),
-      valueBox("Serious", 100, width = 4, size = "large"),
-      valueBox("Fatal", 100, width = 4, size = "large"),
+                    selectInput("borough", "Borough", 
+                                c("All", unique(collision_data$borough))),
+                    selectInput("severity", "Severity", 
+                                c("All", unique(collision_data$severity))))
+        ),
+     
+     # Value Boxes ----
+     valueBoxOutput("slight_value_box"),
+     valueBoxOutput("serious_value_box"),
+     valueBoxOutput("fatal_value_box"),
       
-     # First plot - Bar chart
+     # First plot - Bar chart ----
       fluidRow(
         echarts4rOutput("bar_plot")
       ), 
-     # Second plot - Heat map
+     # Second plot - Heat map ----
      fluidRow(
        echarts4rOutput("heat_map")
      )
       
     ),
-    # Tab: Data
+    # Tab: Data ----
     tabItem(
       tabName = "data",
       fluidRow(
         dataTableOutput("data_table")
       )
     )
-  )
+  ),
+  # Disconnect message on disconnection on App ----
+  disconnectMessage()
 )
