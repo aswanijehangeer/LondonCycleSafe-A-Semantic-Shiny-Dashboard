@@ -1,0 +1,14 @@
+name: bicycle-collisions-in-london
+title: bicycle-collisions-in-london
+username:
+account: aswanijahangeer
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 10200358
+bundleId: 7807874
+url: https://aswanijahangeer.shinyapps.io/bicycle-collisions-in-london/
+when: 1697443488.20093
+lastSyncTime: 1697443488.20096
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: LICENSE|README.md
