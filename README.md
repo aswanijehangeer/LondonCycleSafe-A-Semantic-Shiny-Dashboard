@@ -1,14 +1,14 @@
-# Bike Collision Dashboard - RShiny Web Application
+# Bike Collisions in London - Shiny Semantic Dashboard
 
-The Bike Collision Dashboard is a Shiny web application designed to visualize and analyze bike collision data in London. The app features two main tabs: "Home" and "Data."
+This Shiny dashboard displays information about bike collisions in London from 2005 to 2019. Users can filter the data by borough and severity to see how many collisions occurred in each category. The dashboard also displays two charts: a bar chart showing the number of collisions by year and borough, and a heat map showing the concentration of collisions by year and month.
 
-In the "Home" tab, users can select a specific borough and severity to view corresponding collision statistics. It provides a set of value boxes for quick summary insights and interactive plots (a bar chart and a heat map) that dynamically update based on user input.
+The shiny semantic dashboard is a web application built using Shiny, semantic.dashboard, echarts4r, shinyWidgets, and DT packages.
 
-The "Data" tab offers a table view of the dataset for detailed exploration.
+### [Checkout live dashboard](https://aswanijahangeer.shinyapps.io/bicycle-collisions-in-london/)
 
 ### Contributing
 
-Contributions to this project are welcome. Feel free to open an issue or pull request.
+Contributions to enhance the dashboard or improve its functionalities and your feedback is highly appreciated as I continue to learn and improve my RShiny skills.
 
 ### License
 
