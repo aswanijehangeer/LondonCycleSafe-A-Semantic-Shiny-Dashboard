@@ -2,12 +2,12 @@
 source("global.R")
 
 # Define UI for dashboard ----
-ui <- dashboardPage(
-  dashboardHeader(title =  tags$b("Bike Collision in London [2005 - 2019]"),
+ui <- dashboard_page(
+  dashboardHeader(title =  tags$b("Bike Collisions in London [2005 - 2019]"),
                   titleWidth = "wide",
                   color = "grey",
                   inverted = TRUE),
-  dashboardSidebar(size = "wide",
+  dashboardSidebar(size = "thin",
                    sidebarMenu(
                      menuItem(tabName = "home", text = "Home", icon = icon("home")),
                      menuItem(tabName = "data", text = "Data", icon = icon("table"))
@@ -18,13 +18,19 @@ ui <- dashboardPage(
     tabItem(
       tabName = "home",
      # Input Box ----
-      box( 
+      box(
         title = "Inputs", title_side = "top left", width = 16,
-        splitLayout(cellWidths = c("50%", "50%"),
-                    selectInput("borough", "Borough", 
-                                c("All", unique(collision_data$borough))),
-                    selectInput("severity", "Severity", 
-                                c("All", unique(collision_data$severity))))
+        split_layout(cell_widths = c("25%, 25%, 25%, 25%"),
+                                     cell_args = "padding: 6px;",
+                                     style = "border: none;",
+                    selectInput("borough", "Borough",
+                                c("All", unique(collision_data$Borough))),
+                    selectInput("severity", "Severity",
+                                c("All", unique(collision_data$Severity))),
+                    selectInput("ward", "Ward",
+                                c("All", unique(collision_data$Ward))),
+                    selectInput("type", "Casuality Type",
+                                c("All", unique(collision_data$Casualties_Types))))
         ),
      
      # Value Boxes ----
@@ -45,11 +51,17 @@ ui <- dashboardPage(
     # Tab: Data ----
     tabItem(
       tabName = "data",
+      div(
+        downloadBttn("downloadData", "Download",
+                     style = "simple",
+                     color = "primary",
+                     icon = icon("download"))
+      ),
       fluidRow(
-        dataTableOutput("data_table")
+        reactableOutput("data_table")
       )
-    )
-  ),
+    ),
   # Disconnect message on disconnection on App ----
   disconnectMessage()
+ )
 )
