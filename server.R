@@ -4,26 +4,39 @@ server <- function(input, output, session) {
   # # Filtering data based on user inputs ----
   filtered_data <- reactive({
     filter_data <- collision_data
-
-    # Filter based on selected borough ----
+    
+    # Filtering based on selected borough ----
     if (input$borough != "All") {
       filter_data <- filter_data |>
-        filter(borough == input$borough)
+        filter(Borough == input$borough)
     }
-
-    # Filter based on selected severity ----
+    
+    # Filtering based on selected severity ----
     if (input$severity != "All") {
       filter_data <- filter_data |>
-        filter(severity == input$severity)
+        filter(Severity == input$severity)
     }
-
+    
+    # Filtering based on selected ward ----
+    if (input$ward != "All") {
+      filter_data <- filter_data |>
+        filter(Ward == input$ward)
+    }
+    
+    # Filtering based on selected casualty type ----
+    if (input$type != "All") {
+      filter_data <- filter_data |>
+        filter(Casualties_Types == input$type)
+    }
+    
     return(filter_data)
   })
   
   # Updating Slight Collisions Value Box ----
   output$slight_value_box <- renderValueBox({
     values <- filtered_data()
-    slight_casualties <- sum(values$number_of_casualties[values$severity == "slight"])
+    slight_casualties <- sum(values$Casualties[values$Severity == "slight"])
+    
     valueBox(
       value = slight_casualties,
       subtitle = "Slight",
@@ -35,11 +48,11 @@ server <- function(input, output, session) {
   # Updating Serious Collisions Value Box ----
   output$serious_value_box <- renderValueBox({
     values <- filtered_data()
-    serious_casualties <- sum(values$number_of_casualties[values$severity == "serious"])
+    serious_casualties <- sum(values$Casualties[values$Severity == "serious"])
     valueBox(
       value = serious_casualties,
       subtitle = "Serious",
-      width = 4, 
+      width = 4,
       color = "teal"
     )
   })
@@ -47,7 +60,8 @@ server <- function(input, output, session) {
   # Updating Fatal Collisions Value Box ----
   output$fatal_value_box <- renderValueBox({
     values <- filtered_data()
-    fatal_casualties <- sum(values$number_of_casualties[values$severity == "fatal"])
+    fatal_casualties <- sum(values$Casualties[values$Severity == "fatal"])
+    
     valueBox(
       value = fatal_casualties,
       subtitle = "Fatal",
@@ -60,12 +74,12 @@ server <- function(input, output, session) {
   
   # Creating a bar plot based on filtered data ----
   output$bar_plot <- renderEcharts4r({
-
+    
     filtered <- filtered_data()
-
+    
     plot_data <- filtered |>
       group_by(Year) |>
-      summarise(Collisions = sum(number_of_casualties))
+      summarise(Collisions = sum(Casualties))
     
     # Selecting title to London if ----
     title <- if (input$borough == "All") {
@@ -73,7 +87,7 @@ server <- function(input, output, session) {
     } else {
       paste("Number of Casualties in", input$borough, "(", input$severity, ")")
     }
-
+    
     # Creating the bar plot ----
     plot_data |>
       e_charts(x = Year) |>
@@ -90,7 +104,19 @@ server <- function(input, output, session) {
     # Calculating the total number of casualties for each Year and Month ----
     heat_map_data <- filtered_data() |> 
       group_by(Year, Month) |> 
-      summarise(Collisions = sum(number_of_casualties), .groups = 'drop') 
+      summarise(Collisions = sum(Casualties), .groups = 'drop') 
+    
+    # Shiny-alert if there is no data for selected inputs
+    if (nrow(heat_map_data) == 0) {
+      shinyalert(
+        title = "Data Not Available", 
+        text = "Data is not available for the selected inputs.",
+        type = "error",
+        animation = TRUE,
+        confirmButtonCol = "grey",
+        confirmButtonText = "BACK",)
+      return()
+    }
     
     # Create the heat-map ----
     heat_map_data |>
@@ -101,9 +127,20 @@ server <- function(input, output, session) {
       e_tooltip(trigger = "item") |>
       e_legend(show = FALSE)
   })
-
+  
   # Tab: Data ----
-  output$data_table <- renderDataTable ({
-    filtered_data()
+  output$data_table <- renderReactable ({
+    reactable(filtered_data(),
+              bordered = TRUE, highlight = TRUE)
   })
+  
+  # Download Data Button
+  output$downloadData <- downloadHandler(
+    filename = function() {
+      paste('data-', Sys.Date(), '.csv', sep='')
+    },
+    content = function(con) {
+      write.csv(filtered_data(), con)
+    }
+  )
 }
