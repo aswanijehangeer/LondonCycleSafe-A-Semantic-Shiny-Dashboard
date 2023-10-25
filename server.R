@@ -131,13 +131,14 @@ server <- function(input, output, session) {
   # Tab: Data ----
   output$data_table <- renderReactable ({
     reactable(filtered_data(),
-              bordered = TRUE, highlight = TRUE)
+              bordered = TRUE, highlight = TRUE,
+              resizable = TRUE)
   })
   
   # Download Data Button
   output$downloadData <- downloadHandler(
     filename = function() {
-      paste('data-', Sys.Date(), '.csv', sep='')
+      paste('Bike Collisions Data.csv')
     },
     content = function(con) {
       write.csv(filtered_data(), con)
