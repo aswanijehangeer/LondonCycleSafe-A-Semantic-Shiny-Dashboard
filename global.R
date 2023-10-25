@@ -42,3 +42,36 @@ collision_data <- collision_data |>
 collision_data <- collision_data |>
   mutate(Year = as.character(year(Date)),
          Month = month(Date, label = TRUE))
+
+
+# Making Date column better looking
+datetime_value <- collision_data$Date
+
+# Extracting date and time components
+date_part <- gsub(" .*", "", datetime_value)
+time_part <- gsub(".* ", "", datetime_value)
+
+# Converting in a readable format
+formatted_datetime <- paste(date_part, format(strptime(time_part, "%H:%M:%S"), format = "%I:%M %p"), sep = " at ")
+
+# Adding back to collisions data frame
+collision_data$Date <- formatted_datetime
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
