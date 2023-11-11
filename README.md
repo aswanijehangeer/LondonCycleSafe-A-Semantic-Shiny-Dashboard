@@ -1,5 +1,7 @@
 # Bike Collisions in London - Shiny Semantic Dashboard
 
+<img src="images/bike-collisions-dashboard.png" width="170" height="200" align="right"/>
+
 This Shiny dashboard displays information about bike collisions in London from 2005 to 2019. Users can filter the data by borough and severity to see how many collisions occurred in each category. The dashboard also displays two charts: a bar chart showing the number of collisions by year and borough, and a heat map showing the concentration of collisions by year and month.
 
 - ### [Checkout Live Dashboard.](https://aswanijahangeer.shinyapps.io/bicycle-collisions-in-london/)
