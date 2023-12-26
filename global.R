@@ -5,12 +5,12 @@ library(readxl)
 library(janitor)
 
 library(shiny)
+library(shiny.semantic)
 library(semantic.dashboard)
 library(shinyWidgets)
 library(reactable)
 library(echarts4r)
 library(shinydisconnect)
-library(shiny.semantic)
 library(shinyalert)
 
 
