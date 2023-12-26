@@ -1,4 +1,4 @@
-# Bike Collisions in London - Shiny Semantic Dashboard
+# LondonCycleSafe: A Semantic Shiny Dashboard
 
 <img src="images/bike-collisions-dashboard.png" width="170" height="200" align="right"/>
 
